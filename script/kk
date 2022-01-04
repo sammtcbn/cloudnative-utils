@@ -1,0 +1,71 @@
+#!/bin/bash
+ME=$(basename $0)
+VER=0.1
+
+USAGE_STR="$(cat <<EOF
+${ME} ${VER}
+Usage: ${ME} [OPTIONS]
+
+OPTIONS
+   1) pod list
+  11) pod describe
+
+   2) svc list
+  21) svc describe
+
+   3) pv list
+  31) pv describe
+
+   4) pvc list
+  41) pvc describe
+
+   5) deployment list
+  51) deployment describe
+
+   q) quit
+EOF
+)"
+
+function showmenu()
+{
+    echo "$USAGE_STR"
+    read -p "Choose: " choice
+}
+
+while :
+do
+    showmenu
+    case $choice in
+      1) kpod;;
+      11)
+         read -p "POD Name: " name
+         kpoddesc "${name}"
+         ;;
+      2) ksvc;;
+      21)
+         read -p "SVC Name: " name
+         ksvcdesc "${name}"
+         ;;
+      3) kpv;;
+      31)
+         read -p "PV Name: " name
+         kpvdesc "${name}"
+         ;;
+      4) kpvc;;
+      41)
+         read -p "PVC Name: " name
+         kpvcdesc "${name}"
+         ;;
+      5) kdeploy;;
+      51)
+         read -p "Deployment Name: " name
+         kdeploydesc "${name}"
+         ;;
+      q) exit 0;;
+      *)
+	     showmenu
+       	 ;;
+    esac
+done
+
+echo "bye"

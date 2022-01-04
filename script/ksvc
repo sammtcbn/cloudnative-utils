@@ -1,0 +1,3 @@
+#!/bin/bash
+echo kubectl get svc -A
+kubectl get svc -A

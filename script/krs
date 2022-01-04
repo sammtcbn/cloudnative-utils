@@ -1,0 +1,3 @@
+#!/bin/bash
+echo kubectl get rs -A
+kubectl get rs -A

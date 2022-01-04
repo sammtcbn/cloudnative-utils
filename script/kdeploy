@@ -1,0 +1,3 @@
+#!/bin/bash
+echo kubectl get deployment -A
+kubectl get deployment -A

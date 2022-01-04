@@ -1,0 +1,3 @@
+#!/bin/bash
+echo kubectl get pod -A
+kubectl get pod -A
