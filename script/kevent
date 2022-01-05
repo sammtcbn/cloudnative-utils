@@ -1,0 +1,3 @@
+#!/bin/bash
+echo kubectl get events
+kubectl get events
