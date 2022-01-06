@@ -1,0 +1,3 @@
+#!/bin/bash
+echo helm repo ls
+helm repo ls
