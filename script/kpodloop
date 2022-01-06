@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ -z "${1}" ]; then
+    sec=1
+else
+    sec=${1}
+fi
+
+while :
+do
+    date '+%Y-%m-%d %H:%M:%S'
+    echo kubectl get pod -A
+    kubectl get pod -A
+    echo
+    sleep $sec
+done
+

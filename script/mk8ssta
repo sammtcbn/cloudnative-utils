@@ -1,0 +1,3 @@
+#!/bin/bash
+echo microk8s status
+microk8s status

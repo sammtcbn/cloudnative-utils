@@ -1,0 +1,3 @@
+#!/bin/bash
+echo ctr c ls
+ctr c ls
