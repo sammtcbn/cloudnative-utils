@@ -43,8 +43,6 @@ if [ "${ins}" != "y" ] && [ "${ins}" != "Y" ]; then
     exit 1
 fi
 
-src=script
-
 function cmd_exists ()
 {
     if ! type $1> /dev/null 2>&1; then
@@ -65,6 +63,7 @@ function remote_exec ()
 
 function install_to_local ()
 {
+    local src=$1
     mkdir -p ${destpath} || exit 1
     cp -rf ${src}/* ${destpath} || exit 1
 }
@@ -72,6 +71,7 @@ function install_to_local ()
 
 function install_to_remote ()
 {
+  local src=$1
   remote_exec mkdir -p ${destpath}
 
   for f in ${src}/*; do
@@ -98,10 +98,16 @@ function install_to_remote ()
 
 if [ -z "${ip}" ]; then
     echo install to ${destpath} ...
-    install_to_local
+    install_to_local containerd-script
+    install_to_local helm-script
+    install_to_local kubectl-script
+    install_to_local microk8s-script
 else
     echo install to ${id}@${ip}:${destpath} ...
-    install_to_remote
+    install_to_remote containerd-script
+    install_to_remote helm-script
+    install_to_remote kubectl-script
+    install_to_remote microk8s-script
 fi
 
 echo "done"
