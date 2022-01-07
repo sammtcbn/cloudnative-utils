@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ -z "${1}" ]; then
+    echo kubectl get ingress -A
+    kubectl get ingress -A
+else
+    ingname=${1}
+    echo kubectl describe ing ${ingname}
+    kubectl describe ing ${ingname}
+fi
