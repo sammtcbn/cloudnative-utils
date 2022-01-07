@@ -1,0 +1,16 @@
+#!/bin/bash
+ME=$(basename $0)
+
+function usage() {
+    echo "Usage: ${ME} [FILE_NAME]"
+    exit 1
+}
+
+if [ -z "${1}" ]; then
+    usage
+fi
+
+fn=${1}
+
+echo kubectl apply -f ${fn}
+kubectl apply -f ${fn}
