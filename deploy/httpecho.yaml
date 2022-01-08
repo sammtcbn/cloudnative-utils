@@ -24,4 +24,5 @@ metadata:
 spec:
   selector:
     app: banana
-  ports: 5678
+  ports:
+    - port: 5678
