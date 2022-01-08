@@ -1,0 +1,39 @@
+# refer to https://www.reddit.com/r/kubernetes/comments/nbhsts/404_on_ingress_in_microk8s/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echoserver
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: echoserver
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: echoserver
+    spec:
+      containers:
+        - name: echoserver
+          image: "utf8x/echoserver:latest"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: echoserver-svc
+  namespace: default
+spec:
+  selector:
+    app: echoserver
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30001
