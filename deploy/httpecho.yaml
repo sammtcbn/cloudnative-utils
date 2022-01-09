@@ -1,5 +1,3 @@
-# refer to https://stackoverflow.com/questions/57425817/nginx-ingress-giving-404-not-found-for-any-ingress-resource
-
 kind: Pod
 apiVersion: v1
 metadata:
