@@ -99,12 +99,14 @@ function install_to_remote ()
 if [ -z "${ip}" ]; then
     echo install to ${destpath} ...
     install_to_local containerd-script
+    install_to_local docker-script
     install_to_local helm-script
     install_to_local kubectl-script
     install_to_local microk8s-script
 else
     echo install to ${id}@${ip}:${destpath} ...
     install_to_remote containerd-script
+    install_to_remote docker-script
     install_to_remote helm-script
     install_to_remote kubectl-script
     install_to_remote microk8s-script

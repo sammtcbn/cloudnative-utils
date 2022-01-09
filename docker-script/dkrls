@@ -1,0 +1,8 @@
+#!/bin/bash
+echo docker image ls
+docker image ls
+echo
+
+echo docker ps -l
+docker ps -l
+echo
