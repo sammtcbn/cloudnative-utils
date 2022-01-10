@@ -1,4 +1,12 @@
 #!/bin/bash
+echo docker network ls
+docker network ls
+echo
+
+echo docker volume ls
+docker volume ls
+echo
+
 echo docker image ls
 docker image ls
 echo
