@@ -3,6 +3,6 @@ echo docker image ls
 docker image ls
 echo
 
-echo docker ps -l
-docker ps -l
+echo docker ps -a
+docker ps -a
 echo
