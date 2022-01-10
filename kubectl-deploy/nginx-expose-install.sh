@@ -24,13 +24,13 @@ function print_cyan()
 }
 
 read -p "external ip [${externalip}] : " tmpin
-if [ -z "${externalip}" ]; then
+if [ ! -z "${tmpin}" ]; then
     externalip=${tmpin}
 fi
 
-read -p "external port [${externalport}] : " tmpin
-if [ -z "${externalport}" ]; then
-    externalport=${tmpin}
+read -p "external port [${externalport}] : " tmpin2
+if [ ! -z "${tmpin2}" ]; then
+    externalport=${tmpin2}
 fi
 
 read -p "Are you sure you want to expose ${externalip}:${externalport} ? [y/N] " ins
