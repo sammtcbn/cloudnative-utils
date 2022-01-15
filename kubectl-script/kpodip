@@ -1,0 +1,17 @@
+#!/bin/bash
+ME=$(basename $0)
+
+function usage() {
+    echo "Usage: ${ME} [POD_NAME]"
+    exit 1
+}
+
+if [ -z "${1}" ]; then
+    usage
+fi
+
+name=${1}
+
+echo kubectl get pod ${name} --template={{.status.podIP}}
+kubectl get pod ${name} --template={{.status.podIP}}
+echo
