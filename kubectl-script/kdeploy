@@ -1,3 +1,24 @@
 #!/bin/bash
-echo kubectl get deployment -A
-kubectl get deployment -A
+if [ -z "${1}" ]; then
+    echo kubectl get deploy -A
+    kubectl get deploy -A
+    exit
+fi
+
+name=${1}
+
+echo kubectl describe deploy ${name}
+kubectl describe deploy ${name}
+rc=$?
+#echo ${rc}
+if [ $rc -gt 0 ]; then
+    echo
+    #echo kubectl get deploy -A --no-headers
+    #kubectl get deploy -A --no-headers
+    ns=$(kubectl get deploy -A --no-headers | grep ${name} | awk '{print $1}')
+    #echo namespace is ${ns}
+    if [ ! -z "${ns}" ]; then
+        echo kubectl describe deploy ${name} -n ${ns}
+        kubectl describe deploy ${name} -n ${ns}
+    fi
+fi
