@@ -14,3 +14,17 @@ name=${1}
 
 echo kubectl delete ingress "${name}"
 kubectl delete ingress "${name}"
+
+rc=$?
+#echo ${rc}
+if [ $rc -gt 0 ]; then
+    echo
+    #echo kubectl get ingress -A --no-headers
+    #kubectl get ingress -A --no-headers
+    ns=$(kubectl get ingress -A --no-headers | grep ${name} | awk '{print $1}')
+    #echo namespace is ${ns}
+    if [ ! -z "${ns}" ]; then
+        echo kubectl delete ingress ${name} -n ${ns}
+        kubectl delete ingress ${name} -n ${ns}
+    fi
+fi
