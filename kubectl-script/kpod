@@ -1,3 +1,24 @@
 #!/bin/bash
-echo kubectl get pod -A
-kubectl get pod -A
+if [ -z "${1}" ]; then
+    echo kubectl get pod -A
+    kubectl get pod -A
+    exit
+fi
+
+name=${1}
+
+echo kubectl describe pod ${name}
+kubectl describe pod ${name}
+rc=$?
+#echo ${rc}
+if [ $rc -gt 0 ]; then
+    echo
+    #echo kubectl get pod -A --no-headers
+    #kubectl get pod -A --no-headers
+    ns=$(kubectl get pod -A --no-headers | grep ${name} | awk '{print $1}')
+    #echo namespace is ${ns}
+    if [ ! -z "${ns}" ]; then
+        echo kubectl describe pod ${name} -n ${ns}
+        kubectl describe pod ${name} -n ${ns}
+    fi
+fi
