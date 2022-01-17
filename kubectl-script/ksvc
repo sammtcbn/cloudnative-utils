@@ -2,8 +2,23 @@
 if [ -z "${1}" ]; then
     echo kubectl get svc -A
     kubectl get svc -A
-else
-    svcname=${1}
-    echo kubectl describe svc ${svcname}
-    kubectl describe svc ${svcname}
+    exit
+fi
+
+name=${1}
+
+echo kubectl describe svc ${name}
+kubectl describe svc ${name}
+rc=$?
+#echo ${rc}
+if [ $rc -gt 0 ]; then
+    echo
+    #echo kubectl get svc -A --no-headers
+    #kubectl get svc -A --no-headers
+    ns=$(kubectl get svc -A --no-headers | grep ${name} | awk '{print $1}')
+    #echo namespace is ${ns}
+    if [ ! -z "${ns}" ]; then
+        echo kubectl describe svc ${name} -n ${ns}
+        kubectl describe svc ${name} -n ${ns}
+    fi
 fi
