@@ -2,7 +2,7 @@
 ME=$(basename $0)
 
 function usage() {
-    echo "Usage: ${ME} [SERVICE_NAME]"
+    echo "Usage: ${ME} [Service_Name]"
     exit 1
 }
 
@@ -14,3 +14,17 @@ name=${1}
 
 echo kubectl delete svc "${name}"
 kubectl delete svc "${name}"
+
+rc=$?
+#echo ${rc}
+if [ $rc -gt 0 ]; then
+    echo
+    #echo kubectl get svc -A --no-headers
+    #kubectl get svc -A --no-headers
+    ns=$(kubectl get svc -A --no-headers | grep ${name} | awk '{print $1}')
+    #echo namespace is ${ns}
+    if [ ! -z "${ns}" ]; then
+        echo kubectl delete svc ${name} -n ${ns}
+        kubectl delete svc ${name} -n ${ns}
+    fi
+fi

@@ -12,5 +12,19 @@ fi
 
 name=${1}
 
-echo kubectl delete deployment ${name}
-kubectl delete deployment ${name}
+echo kubectl delete deployment "${name}"
+kubectl delete deployment "${name}"
+
+rc=$?
+#echo ${rc}
+if [ $rc -gt 0 ]; then
+    echo
+    #echo kubectl get deployment -A --no-headers
+    #kubectl get deployment -A --no-headers
+    ns=$(kubectl get deployment -A --no-headers | grep ${name} | awk '{print $1}')
+    #echo namespace is ${ns}
+    if [ ! -z "${ns}" ]; then
+        echo kubectl delete deployment ${name} -n ${ns}
+        kubectl delete deployment ${name} -n ${ns}
+    fi
+fi

@@ -2,7 +2,7 @@
 ME=$(basename $0)
 
 function usage() {
-    echo "Usage: ${ME} [INGRESS_NAME]"
+    echo "Usage: ${ME} [Ingress_Name]"
     exit 1
 }
 
