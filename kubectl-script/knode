@@ -1,3 +1,9 @@
 #!/bin/bash
-echo kubectl get node
-kubectl get node
+if [ -z "${1}" ]; then
+    echo kubectl get node
+    kubectl get node
+else
+    name=${1}
+    echo kubectl describe node ${name}
+    kubectl describe node ${name}
+fi
