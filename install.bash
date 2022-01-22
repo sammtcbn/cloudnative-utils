@@ -103,6 +103,7 @@ if [ -z "${ip}" ]; then
     install_to_local helm-script
     install_to_local kubectl-script
     install_to_local microk8s-script
+    install_to_local minikube-script
 else
     echo install to ${id}@${ip}:${destpath} ...
     install_to_remote containerd-script
@@ -110,6 +111,7 @@ else
     install_to_remote helm-script
     install_to_remote kubectl-script
     install_to_remote microk8s-script
+    install_to_remote minikube-script
 fi
 
 echo "done"
