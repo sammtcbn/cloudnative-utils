@@ -1,0 +1,21 @@
+#!/bin/bash
+ME=$(basename $0)
+
+function usage() {
+    echo "Usage: ${ME} [SVC_NAME] [External_IP]"
+    exit 1
+}
+
+if [ -z "${1}" ]; then
+    usage
+fi
+
+name=${1}
+
+if [ -z "${2}" ]; then
+    usage
+fi
+
+ip=${2}
+
+kubectl patch svc ${name} -p "{\"spec\":{\"externalIPs\":[\"${ip}\"]}}"
