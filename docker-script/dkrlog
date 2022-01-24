@@ -12,7 +12,5 @@ fi
 
 cid=${1}
 
-#docker exec -it ${cid} sh
-
-echo docker exec -it ${cid} /bin/sh
-docker exec -it ${cid} /bin/sh
+echo docker logs ${cid}
+docker logs ${cid}

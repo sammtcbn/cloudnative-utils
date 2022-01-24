@@ -1,28 +1,3 @@
 #!/bin/bash
-
-ME=$(basename $0)
-
-function usage() {
-    echo "Usage:"
-    echo "  ${ME} [option]"
-    echo "    0/img      - List all docker images"
-    echo "    1/rmimgall - Remove all docker images"
-    exit 1
-}
-
-if [ -z "${1}" ]; then
-    usage
-fi
-
-opt=${1}
-
-case $opt in
-    0) ;&
-    img)
-        docker images
-        ;;
-    1) ;&
-    rmimagall)
-        docker images | awk 'NR>1 {print $3}' | xargs -n1 docker rmi -f
-        ;;
-esac
+echo docker ps -a
+docker ps -a

@@ -12,5 +12,7 @@ fi
 
 cid=${1}
 
+#docker exec -it ${cid} bash
+
 echo docker exec -it ${cid} /bin/bash
 docker exec -it ${cid} /bin/bash

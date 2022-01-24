@@ -9,8 +9,3 @@ echo
 
 echo docker image ls
 docker image ls
-echo
-
-echo docker ps -a
-docker ps -a
-echo
