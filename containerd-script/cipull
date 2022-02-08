@@ -1,0 +1,29 @@
+#!/bin/bash
+ME=$(basename $0)
+
+function usage() {
+    echo "Usage: ${ME} [Image_URL] [Registry_User] [Registry_Password]"
+    exit 1
+}
+
+if [ -z "${1}" ]; then
+    usage
+fi
+
+img=${1}
+
+if [ ! -z "${2}" ]; then
+    if [ -z "${3}" ]; then
+        usage
+    fi
+    user=${2}
+    pw=${3}
+fi
+
+if [ -z "${pw}" ]; then
+    echo ctr image pull ${img}
+    ctr image pull ${img}
+else
+    echo ctr image pull ${img} -u ${user}:${pw}
+    ctr image pull ${img} -u ${user}:${pw}
+fi
