@@ -1,0 +1,3 @@
+#!/bin/bash
+echo ctr image rm $(ctr i ls -q)
+ctr image rm $(ctr i ls -q)
