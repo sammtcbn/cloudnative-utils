@@ -1,0 +1,26 @@
+#!/bin/bash
+ME=$(basename $0)
+
+function failed()
+{
+    echo "$*" >&2
+    exit 1
+}
+
+function usage() {
+    echo "Usage: ${ME} [Mount_Point]"
+    exit 1
+}
+
+if [ $# != 1 ]; then
+    usage
+fi
+
+mpoint=${1}
+
+if [ -d "${mpoint}" ]; then
+    echo ctr image unmount ${mpoint}
+    ctr image unmount ${mpoint}
+else
+    echo ${mpoint} not found
+fi

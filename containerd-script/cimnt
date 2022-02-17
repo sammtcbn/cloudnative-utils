@@ -1,0 +1,27 @@
+#!/bin/bash
+ME=$(basename $0)
+
+function failed()
+{
+    echo "$*" >&2
+    exit 1
+}
+
+function usage() {
+    echo "Usage: ${ME} [Image_URL] [Mount_Point]"
+    exit 1
+}
+
+if [ $# != 2 ]; then
+    usage
+fi
+
+img=${1}
+mpoint=${2}
+
+if [ ! -d "${mpoint}" ]; then
+    mkdir -p ${mpoint} || failed "failed to create ${mpoint}"
+fi
+
+echo ctr image mount ${img} ${mpoint}
+ctr image mount ${img} ${mpoint}
