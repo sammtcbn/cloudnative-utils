@@ -4,44 +4,48 @@ ME=$(basename $0)
 ip=
 id=
 pw=
+destpath=
 
-read -p "install to remote ssh ip: [localhost] " ip
+function interactive_question ()
+{
+    read -p "install to remote ssh ip: [localhost] " ip
 
-if [ ! -z "${ip}" ]; then
-    read -p "login id: " id
-    if [ -z "${id}" ]; then
+    if [ ! -z "${ip}" ]; then
+        read -p "login id: " id
+        if [ -z "${id}" ]; then
+            exit 1
+        fi
+        printf "login password: "
+        read -s pw
+        if [ -z "${pw}" ]; then
+            printf "\n"
+            exit 1
+        fi
+        printf "*\n"
+    fi
+
+    if [ -z "${ip}" ]; then
+        destpath=~/bin
+    else
+        destpath=/home/${id}/bin
+    fi
+
+    read -p "install path ? [${destpath}] " tmppath
+
+    if [ ! -z "${tmppath}" ]; then
+        destpath=tmppath
+    fi
+
+    if [ -z "${ip}" ]; then
+        read -p "Are you sure you want to install to ${destpath} ? [y/N] " ins
+    else
+        read -p "Are you sure you want to install to ${id}@${ip}:${destpath} ? [y/N] " ins
+    fi
+
+    if [ "${ins}" != "y" ] && [ "${ins}" != "Y" ]; then
         exit 1
     fi
-    printf "login password: "
-    read -s pw
-    if [ -z "${pw}" ]; then
-        printf "\n"
-        exit 1
-    fi
-    printf "*\n"
-fi
-
-if [ -z "${ip}" ]; then
-    destpath=~/bin
-else
-    destpath=/home/${id}/bin
-fi
-
-read -p "install path ? [${destpath}] " tmppath
-
-if [ ! -z "${tmppath}" ]; then
-    destpath=tmppath
-fi
-
-if [ -z "${ip}" ]; then
-    read -p "Are you sure you want to install to ${destpath} ? [y/N] " ins
-else
-    read -p "Are you sure you want to install to ${id}@${ip}:${destpath} ? [y/N] " ins
-fi
-
-if [ "${ins}" != "y" ] && [ "${ins}" != "Y" ]; then
-    exit 1
-fi
+}
 
 function cmd_exists ()
 {
@@ -96,7 +100,28 @@ function install_to_remote ()
 
 }
 
-if [ -z "${ip}" ]; then
+if [ $# -eq 1 ]; then
+    ip=${1}
+    if [ "${ip}" == "localhost" ]; then
+        destpath=~/bin
+    else
+        interactive_question
+    fi
+elif [ $# -eq 3 ]; then
+    ip=${1}
+    id=${2}
+    pw=${3}
+    destpath=/home/${id}/bin
+elif [ $# -eq 4 ]; then
+    ip=${1}
+    id=${2}
+    pw=${3}
+    destpath=${4}
+else
+    interactive_question
+fi
+
+if [ "${ip}" == "localhost" ]; then
     echo install to ${destpath} ...
     install_to_local containerd-script
     install_to_local docker-script
