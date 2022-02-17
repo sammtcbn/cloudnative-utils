@@ -75,29 +75,28 @@ function install_to_local ()
 
 function install_to_remote ()
 {
-  local src=$1
-  remote_exec mkdir -p ${destpath}
+    local src=$1
+    remote_exec mkdir -p ${destpath}
 
-  for f in ${src}/*; do
-    echo ${f}
+    for f in ${src}/*; do
+        echo ${f}
 
-    if [[ -d ${f} ]]; then
-        if cmd_exists sshpass ; then
-            sshpass -p ${pw} scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r $f ${id}@${ip}:${destpath}
+        if [[ -d ${f} ]]; then
+            if cmd_exists sshpass ; then
+                sshpass -p ${pw} scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r $f ${id}@${ip}:${destpath}
+            else
+                scp -r $f ${id}@${ip}:${destpath}
+            fi
+        elif [[ -f ${f} ]]; then
+            if cmd_exists sshpass ; then
+                sshpass -p ${pw} scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $f ${id}@${ip}:${destpath}
+            else
+                scp $f ${id}@${ip}:${destpath}
+            fi
         else
-            scp -r $f ${id}@${ip}:${destpath}
+            echo "$f not found"
         fi
-    elif [[ -f ${f} ]]; then
-        if cmd_exists sshpass ; then
-            sshpass -p ${pw} scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $f ${id}@${ip}:${destpath}
-        else
-            scp $f ${id}@${ip}:${destpath}
-        fi
-    else
-        echo "$f not found"
-    fi
-  done
-
+      done
 }
 
 if [ $# -eq 1 ]; then
