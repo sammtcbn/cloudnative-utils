@@ -1,0 +1,16 @@
+#!/bin/bash
+ME=$(basename $0)
+
+function usage() {
+    echo "Usage: ${ME} [Container_Name]"
+    exit 1
+}
+
+if [ -z "${1}" ]; then
+    usage
+fi
+
+name=${1}
+
+echo ctr task kill ${name}
+ctr task kill ${name}
