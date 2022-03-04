@@ -8,8 +8,8 @@ fi
 while :
 do
     date '+%Y-%m-%d %H:%M:%S'
-    echo kubectl get pod -A
-    kubectl get pod -A
+    echo kubectl get pod -A --sort-by=.metadata.namespace
+    kubectl get pod -A --sort-by=.metadata.namespace
     echo
     sleep $sec
 done

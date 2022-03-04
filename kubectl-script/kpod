@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ -z "${1}" ]; then
-    echo kubectl get pod -A
-    kubectl get pod -A
+    echo kubectl get pod -A --sort-by=.metadata.namespace
+    kubectl get pod -A --sort-by=.metadata.namespace
     exit
 fi
 
