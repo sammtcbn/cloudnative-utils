@@ -1,0 +1,21 @@
+#!/bin/bash
+ME=$(basename $0)
+
+function usage() {
+    echo "Usage: ${ME} [POD_NAME] [Command ...]"
+    echo "ex: ${ME} postgresql-0 ls -la /etc"
+    exit 1
+}
+
+if [ -z "${1}" ]; then
+    usage
+fi
+
+if [ -z "${2}" ]; then
+    usage
+fi
+
+name=${1}
+cmd=${@:2}
+
+kubectl exec -it ${name} -- sh -c "${cmd}"
