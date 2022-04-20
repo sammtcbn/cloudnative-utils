@@ -2,7 +2,7 @@
 ME=$(basename $0)
 
 function usage() {
-    echo "Usage: ${ME} [POD_NAME]"
+    echo "Usage: ${ME} [POD_Name]"
     exit 1
 }
 
@@ -12,5 +12,19 @@ fi
 
 name=${1}
 
-echo kubectl logs ${name}
-kubectl logs ${name}
+echo kubectl logs "${name}"
+kubectl logs "${name}"
+
+rc=$?
+#echo ${rc}
+if [ $rc -gt 0 ]; then
+    echo
+    #echo kubectl get pods -A --no-headers
+    #kubectl get pods -A --no-headers
+    ns=$(kubectl get pods -A --no-headers | grep ${name} | awk '{print $1}')
+    #echo namespace is ${ns}
+    if [ ! -z "${ns}" ]; then
+        echo kubectl logs ${name} -n ${ns}
+        kubectl logs ${name} -n ${ns}
+    fi
+fi
