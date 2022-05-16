@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ -z "${1}" ]; then
-    echo kubectl get svc -A
-    kubectl get svc -A
+    echo kubectl get svc -A --sort-by=.metadata.namespace
+    kubectl get svc -A --sort-by=.metadata.namespace
     exit
 fi
 
