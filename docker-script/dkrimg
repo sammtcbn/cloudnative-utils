@@ -1,3 +1,0 @@
-#!/bin/bash
-echo docker image ls
-docker image ls
